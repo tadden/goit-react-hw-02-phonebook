@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ContactList extends Component {
    
@@ -21,5 +22,12 @@ class ContactList extends Component {
         );
     };
 };
+
+ContactList.propTypes = {
+    contacts: PropTypes.arrayOf(
+      PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
+    ).isRequired,
+    deleteContact: PropTypes.func.isRequired,
+  };
 
 export default ContactList;
