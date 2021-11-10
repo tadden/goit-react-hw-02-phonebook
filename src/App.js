@@ -4,7 +4,7 @@ import Container from 'Componets/Container';
 import ContactForm from 'Componets/ContactForm';
 import ContactList from 'Componets/ContactList';
 import Filter from 'Componets/Filter';
-import shortid from 'shortid';
+import shortId from 'shortid';
 
 class App extends Component {
   state = {
@@ -18,10 +18,28 @@ class App extends Component {
   };
 
   addContact = ({ name, number }) => {
+
+    const { contacts } = this.state;
+
+    const newContact = {
+      id: shortId.generate(),
+      name: name,
+      number: number,
+    };
+    if (
+      contacts.find(contact => contact.name.toLowerCase() === newContact.name.toLowerCase()) ||
+      contacts.find(contact => contact.number === newContact.number)
+    ) {
+      alert(`${newContact.name} contact is already exists!`);
+      return;
+    }
+
     this.setState(({ contacts }) => ({
-      contacts: [{ id: shortid.generate(), name, number }, ...contacts],
+      contacts: [newContact, ...contacts],
     }));
   };
+
+
   deleteContact = (contactId) => {
     this.setState(({contacts}) => ({
       contacts: contacts.filter(contact => contact.id !== contactId)
